@@ -1,0 +1,28 @@
+model = "gpt-5-codex"
+reasoning_effort = "high"
+sandbox_mode = "workspace-write"
+approval_policy = "untrusted"
+
+[profiles.planning]
+model = "gpt-5-codex"
+reasoning_effort = "high"
+sandbox_mode = "read-only"
+approval_policy = "on-request"
+
+[profiles.implementation]
+model = "gpt-5-codex"
+reasoning_effort = "medium"
+sandbox_mode = "workspace-write"
+approval_policy = "untrusted"
+
+[profiles.ci_autonomous]
+model = "gpt-5-codex"
+reasoning_effort = "medium"
+sandbox_mode = "workspace-write"
+approval_policy = "never"
+
+[env_policy]
+inherit = "core"
+
+[mcp]
+enabled = true
