@@ -1,6 +1,13 @@
 # Visual Software Translation — Codex Starter Repo
 
-This starter repository is set up for an end-to-end Codex workflow:
+This repository now contains two layers:
+
+- a Codex-ready operating structure
+- a first working V1 app scaffold for the Visual Builder concept
+
+## Current status
+
+The repo includes:
 
 - `AGENTS.md` for durable repo instructions
 - `.codex/config.toml` for Codex profiles
@@ -8,20 +15,23 @@ This starter repository is set up for an end-to-end Codex workflow:
 - a JSON schema for structured run reports
 - a starter GitHub Actions workflow for autonomous runs
 - a first product task spec under `docs/specs/feature-request.md`
+- a basic Next.js app scaffold with the intake flow, visual story map, technical mirror, and progress overview
 
 ## Suggested next steps
 
-1. Replace placeholder commands in `AGENTS.md` with your real repo commands.
-2. Update `docs/specs/feature-request.md` with the current task.
-3. Run a planning pass first, then an autonomous run.
+1. Run `npm install`
+2. Run `npm run typecheck`
+3. Run `npm run test`
+4. Run `npm run build`
+5. Replace local-state persistence with a real backend when the shell is stable
 
-## Recommended stack for V1
+## Stack
 
-- Frontend: Next.js / React / Tailwind
-- Backend: Node.js or Python
-- Database: Supabase or Postgres
-- Visual engine: JSON-based project model
-- IDE integration: Codex + MCP
+- Next.js 15
+- React 19
+- TypeScript 5.9
+- Tailwind CSS 4
+- Vitest 3
 
 ## Example autonomous run
 

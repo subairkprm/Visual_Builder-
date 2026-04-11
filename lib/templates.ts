@@ -49,7 +49,7 @@ export const analogyTemplates: AnalogyTemplate[] = [
         visualLabel: "Live Water Delivery",
         technicalLabel: "Live Delivery",
         description: "Release the completed flow to real users with confidence.",
-      },
+      }
     ],
     visualElements: [
       {
@@ -71,7 +71,7 @@ export const analogyTemplates: AnalogyTemplate[] = [
         name: "Storage Tank",
         technicalLabel: "Database or Persistent Store",
         explanation: "The place where operational state and long-term information are kept.",
-      },
+      }
     ],
     qualitySignals: ["Flow clarity", "Leak-free logic", "Pressure-safe testing"],
   },
@@ -123,7 +123,7 @@ export const analogyTemplates: AnalogyTemplate[] = [
         visualLabel: "Table Service",
         technicalLabel: "Live Delivery",
         description: "Serve the finished experience to the end user.",
-      },
+      }
     ],
     visualElements: [
       {
@@ -145,7 +145,7 @@ export const analogyTemplates: AnalogyTemplate[] = [
         name: "Pass Counter",
         technicalLabel: "Quality Review Layer",
         explanation: "The checkpoint before users receive the final result.",
-      },
+      }
     ],
     qualitySignals: ["Service speed", "Consistent output", "Clear handoff timing"],
   },
@@ -197,7 +197,7 @@ export const analogyTemplates: AnalogyTemplate[] = [
         visualLabel: "Building Handover",
         technicalLabel: "Live Delivery",
         description: "Open the final product to its intended users.",
-      },
+      }
     ],
     visualElements: [
       {
@@ -219,10 +219,10 @@ export const analogyTemplates: AnalogyTemplate[] = [
         name: "Inspection Checklist",
         technicalLabel: "Quality Gate",
         explanation: "Formal checks before the system is considered safe to release.",
-      },
+      }
     ],
     qualitySignals: ["Structural stability", "Inspection readiness", "Occupancy confidence"],
-  },
+  }
 ];
 
 export const defaultProjectDraft: ProjectDraft = {

@@ -43,7 +43,6 @@ A task is done only when:
 - changed files and follow-up items are clearly reported
 
 ## Command reference
-Replace these commands with the real commands for your repo.
 
 ### Install
 ```bash
@@ -68,11 +67,6 @@ npm run typecheck
 ### Unit tests
 ```bash
 npm run test
-```
-
-### Integration tests
-```bash
-npm run test:integration
 ```
 
 ### Build
