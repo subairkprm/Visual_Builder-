@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { mergeProjectDraft, loadProjectDraft } from "@/lib/storage";
-import { defaultProjectDraft } from "@/lib/templates";
+import { defaultProjectDraft, getTemplateByKey } from "@/lib/templates";
 
 describe("mergeProjectDraft", () => {
   it("returns a valid full draft verbatim", () => {
@@ -30,12 +30,13 @@ describe("mergeProjectDraft", () => {
 
   it("falls back to default analogyKey when analogyKey is invalid", () => {
     const result = mergeProjectDraft({ analogyKey: "invalid" });
-    expect(result.analogyKey).toBe("irrigation");
+    expect(result.analogyKey).toBe(defaultProjectDraft.analogyKey);
   });
 
   it("clamps out-of-bounds currentStage to the max valid index", () => {
     const result = mergeProjectDraft({ analogyKey: "irrigation", currentStage: 99 });
-    expect(result.currentStage).toBe(6);
+    const maxStage = getTemplateByKey("irrigation").stages.length - 1;
+    expect(result.currentStage).toBe(maxStage);
   });
 
   it("returns defaultProjectDraft for non-object inputs", () => {
