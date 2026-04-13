@@ -9,7 +9,7 @@ import { TemplateCard } from "@/components/template-card";
 import { buildStageTimeline, calculateProgress, getProgressSummary } from "@/lib/project-helpers";
 import { analogyTemplates, defaultProjectDraft, getTemplateByKey } from "@/lib/templates";
 import { clearProjectDraft, loadProjectDraft, saveProjectDraft } from "@/lib/storage";
-import type { ProjectDraft } from "@/types/project";
+import type { AnalogyKey, ProjectDraft } from "@/types/project";
 
 const fieldClassName = "mt-2 w-full rounded-2xl border border-slate-800 bg-slate-950/80 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-400";
 const labelClassName = "text-sm font-medium text-slate-200";
@@ -33,6 +33,18 @@ export function ProjectBuilderDashboard() {
 
   function updateField<Key extends keyof ProjectDraft>(key: Key, value: ProjectDraft[Key]) {
     setDraft((currentDraft) => ({ ...currentDraft, [key]: value }));
+  }
+
+  function handleTemplateChange(newKey: AnalogyKey) {
+    setDraft((currentDraft) => {
+      const newTemplate = getTemplateByKey(newKey);
+      const maxStage = Math.max(newTemplate.stages.length - 1, 0);
+      return {
+        ...currentDraft,
+        analogyKey: newKey,
+        currentStage: Math.min(currentDraft.currentStage, maxStage),
+      };
+    });
   }
 
   function handleSave(event: FormEvent<HTMLFormElement>) {
@@ -114,7 +126,7 @@ export function ProjectBuilderDashboard() {
             </div>
             <div className="space-y-3">
               {analogyTemplates.map((template) => (
-                <TemplateCard key={template.key} template={template} selected={template.key === draft.analogyKey} onSelect={() => updateField("analogyKey", template.key)} />
+                <TemplateCard key={template.key} template={template} selected={template.key === draft.analogyKey} onSelect={() => handleTemplateChange(template.key)} />
               ))}
             </div>
           </section>
