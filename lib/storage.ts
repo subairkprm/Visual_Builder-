@@ -4,7 +4,7 @@ import type { AnalogyKey, ProjectDraft } from "@/types/project";
 const STORAGE_KEY = "visual-builder.project-draft";
 
 function isAnalogyKey(value: unknown): value is AnalogyKey {
-  return value === "irrigation" || value === "kitchen" || value === "construction";
+  return value === "irrigation" || value === "kitchen" || value === "construction" || value === "greenhouse";
 }
 
 export function mergeProjectDraft(raw: unknown): ProjectDraft {

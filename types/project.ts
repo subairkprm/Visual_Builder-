@@ -1,4 +1,4 @@
-export type AnalogyKey = "irrigation" | "kitchen" | "construction";
+export type AnalogyKey = "irrigation" | "kitchen" | "construction" | "greenhouse";
 
 export type StageStatus = "done" | "active" | "upcoming";
 
