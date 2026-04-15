@@ -1,23 +1,23 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { mergeProjectDraft, loadProjectDraft } from "@/lib/storage";
-import { defaultProjectDraft, getTemplateByKey } from "@/lib/templates";
+import { defaultProjectDraft } from "@/lib/templates";
 
 describe("mergeProjectDraft", () => {
-  it("returns a valid full draft verbatim", () => {
+  it("returns a valid draft unchanged", () => {
     const input = {
-      projectName: "My App",
-      objective: "Build something useful",
+      projectName: "Test Project",
+      objective: "Test objective",
       targetUsers: "Developers",
       desiredEnvironment: "VS Code",
       analogyKey: "kitchen" as const,
       currentStage: 3,
-      technicalFocus: "Planning",
+      technicalFocus: "Backend",
       notes: "Some notes",
     };
     expect(mergeProjectDraft(input)).toEqual(input);
   });
 
-  it("falls back missing fields to defaults when only analogyKey is provided", () => {
+  it("fills missing fields with defaults", () => {
     const result = mergeProjectDraft({ analogyKey: "irrigation" });
     expect(result.analogyKey).toBe("irrigation");
     expect(result.projectName).toBe("");
@@ -28,36 +28,45 @@ describe("mergeProjectDraft", () => {
     expect(result.notes).toBe("");
   });
 
-  it("falls back to default analogyKey when analogyKey is invalid", () => {
+  it("falls back to default analogyKey for invalid values", () => {
     const result = mergeProjectDraft({ analogyKey: "invalid" });
-    expect(result.analogyKey).toBe(defaultProjectDraft.analogyKey);
+    expect(result.analogyKey).toBe("irrigation");
   });
 
-  it("clamps out-of-bounds currentStage to the max valid index", () => {
+  it("clamps out-of-bounds currentStage", () => {
     const result = mergeProjectDraft({ analogyKey: "irrigation", currentStage: 99 });
-    const maxStage = getTemplateByKey("irrigation").stages.length - 1;
-    expect(result.currentStage).toBe(maxStage);
+    expect(result.currentStage).toBe(6);
   });
 
-  it("returns defaultProjectDraft for non-object inputs", () => {
+  it("returns defaultProjectDraft for null", () => {
     expect(mergeProjectDraft(null)).toEqual(defaultProjectDraft);
+  });
+
+  it("returns defaultProjectDraft for a string", () => {
     expect(mergeProjectDraft("hello")).toEqual(defaultProjectDraft);
+  });
+
+  it("returns defaultProjectDraft for a number", () => {
     expect(mergeProjectDraft(42)).toEqual(defaultProjectDraft);
   });
 });
 
 describe("loadProjectDraft", () => {
-  it("returns null for corrupt JSON", () => {
-    const getItemMock = vi.fn().mockReturnValue("not-json{");
-    vi.stubGlobal("localStorage", { getItem: getItemMock });
-    expect(loadProjectDraft()).toBeNull();
+  afterEach(() => {
     vi.unstubAllGlobals();
   });
 
-  it("returns null when there is no saved data", () => {
-    const getItemMock = vi.fn().mockReturnValue(null);
-    vi.stubGlobal("localStorage", { getItem: getItemMock });
+  it("returns null for corrupt JSON", () => {
+    vi.stubGlobal("localStorage", {
+      getItem: vi.fn().mockReturnValue("not-json{"),
+    });
     expect(loadProjectDraft()).toBeNull();
-    vi.unstubAllGlobals();
+  });
+
+  it("returns null when no data is stored", () => {
+    vi.stubGlobal("localStorage", {
+      getItem: vi.fn().mockReturnValue(null),
+    });
+    expect(loadProjectDraft()).toBeNull();
   });
 });

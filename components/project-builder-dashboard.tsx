@@ -35,6 +35,18 @@ export function ProjectBuilderDashboard() {
     setDraft((currentDraft) => ({ ...currentDraft, [key]: value }));
   }
 
+  function handleTemplateChange(newKey: AnalogyKey) {
+    setDraft((currentDraft) => {
+      const newTemplate = getTemplateByKey(newKey);
+      const maxStage = Math.max(newTemplate.stages.length - 1, 0);
+      return {
+        ...currentDraft,
+        analogyKey: newKey,
+        currentStage: Math.min(currentDraft.currentStage, maxStage),
+      };
+    });
+  }
+
   function handleSave(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!draft.projectName.trim() || !draft.objective.trim() || !draft.targetUsers.trim() || !draft.desiredEnvironment.trim()) {
