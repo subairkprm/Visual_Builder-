@@ -7,4 +7,4 @@ coverage/
 .env.*
 artifacts/*.json
 .DS_Store
-*.tsbuildinfo
+tsconfig.tsbuildinfo

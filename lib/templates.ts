@@ -236,6 +236,6 @@ export const defaultProjectDraft: ProjectDraft = {
   notes: "",
 };
 
-export function getTemplateByKey(key: ProjectDraft["analogyKey"]) {
-  return analogyTemplates.find((template) => template.key === key) ?? analogyTemplates[0];
+export function getTemplateByKey(key: ProjectDraft["analogyKey"]): AnalogyTemplate {
+  return analogyTemplates.find((template) => template.key === key) ?? analogyTemplates[0]!;
 }
