@@ -222,6 +222,68 @@ export const analogyTemplates: AnalogyTemplate[] = [
       }
     ],
     qualitySignals: ["Structural stability", "Inspection readiness", "Occupancy confidence"],
+  },
+  {
+    key: "greenhouse",
+    title: "Greenhouse Garden",
+    shortDescription: "Grow software features like plants nurtured from seed to harvest.",
+    story:
+      "This template treats each feature like a plant: prepare the soil, plant the seed, tend the growth, check for health, and harvest the result.",
+    stages: [
+      {
+        id: "soil-preparation",
+        visualLabel: "Soil Preparation",
+        technicalLabel: "Need Definition & Planning",
+        description: "Prepare the ground by defining the problem, choosing tools, and planning the approach.",
+      },
+      {
+        id: "planting",
+        visualLabel: "Seed Planting",
+        technicalLabel: "Structure Setup",
+        description: "Plant the foundation: set up the project structure, core modules, and initial scaffolding.",
+      },
+      {
+        id: "tending",
+        visualLabel: "Daily Tending",
+        technicalLabel: "Core Build & Integration",
+        description: "Build the main features, connect modules, and nurture the codebase toward maturity.",
+      },
+      {
+        id: "health-check",
+        visualLabel: "Plant Health Check",
+        technicalLabel: "Testing & Quality",
+        description: "Inspect for bugs, run tests, and verify the system is growing as expected.",
+      },
+      {
+        id: "harvest",
+        visualLabel: "Harvest",
+        technicalLabel: "Live Delivery",
+        description: "Pick the ripe result and deliver the working product to users.",
+      },
+    ],
+    visualElements: [
+      {
+        name: "Greenhouse",
+        technicalLabel: "Development Environment",
+        explanation: "The controlled space where features are grown and protected during development.",
+      },
+      {
+        name: "Seeds",
+        technicalLabel: "Feature Requirements",
+        explanation: "The initial ideas and specs that start the growth cycle.",
+      },
+      {
+        name: "Sunlight & Water",
+        technicalLabel: "Resources & Dependencies",
+        explanation: "The tools, libraries, and infrastructure that keep development moving.",
+      },
+      {
+        name: "Harvest Basket",
+        technicalLabel: "Release Artifact",
+        explanation: "The final deployable output ready for users.",
+      },
+    ],
+    qualitySignals: ["Growth consistency", "Pest-free code", "Harvest readiness"],
   }
 ];
 
