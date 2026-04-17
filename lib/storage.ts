@@ -1,11 +1,8 @@
 import { defaultProjectDraft, getTemplateByKey } from "@/lib/templates";
-import type { AnalogyKey, ProjectDraft } from "@/types/project";
+import type { ProjectDraft } from "@/types/project";
+import { isAnalogyKey } from "@/types/project";
 
 const STORAGE_KEY = "visual-builder.project-draft";
-
-function isAnalogyKey(value: unknown): value is AnalogyKey {
-  return value === "irrigation" || value === "kitchen" || value === "construction";
-}
 
 export function mergeProjectDraft(raw: unknown): ProjectDraft {
   if (!raw || typeof raw !== "object") {

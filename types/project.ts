@@ -1,4 +1,9 @@
-export type AnalogyKey = "irrigation" | "kitchen" | "construction";
+export const ANALOGY_KEYS = ["irrigation", "kitchen", "construction", "greenhouse"] as const;
+export type AnalogyKey = typeof ANALOGY_KEYS[number];
+
+export function isAnalogyKey(value: unknown): value is AnalogyKey {
+  return typeof value === "string" && ANALOGY_KEYS.includes(value as AnalogyKey);
+}
 
 export type StageStatus = "done" | "active" | "upcoming";
 

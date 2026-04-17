@@ -222,6 +222,68 @@ export const analogyTemplates: AnalogyTemplate[] = [
       }
     ],
     qualitySignals: ["Structural stability", "Inspection readiness", "Occupancy confidence"],
+  },
+  {
+    key: "greenhouse",
+    title: "Greenhouse Growing",
+    shortDescription: "View software maturity as cultivating growth from seed to harvest.",
+    story:
+      "This template treats development like greenhouse cultivation: prepare soil, plant seeds, nurture growth, and harvest results.",
+    stages: [
+      {
+        id: "soil-prep",
+        visualLabel: "Soil Preparation",
+        technicalLabel: "Foundation Setup",
+        description: "Prepare the environment and establish the base conditions for growth.",
+      },
+      {
+        id: "seed-selection",
+        visualLabel: "Seed Selection",
+        technicalLabel: "Requirements & Planning",
+        description: "Choose what to grow and define success criteria for the harvest.",
+      },
+      {
+        id: "planting",
+        visualLabel: "Planting",
+        technicalLabel: "Initial Implementation",
+        description: "Put the seeds in place and establish the core structure.",
+      },
+      {
+        id: "growth-nurturing",
+        visualLabel: "Growth & Nurturing",
+        technicalLabel: "Development & Iteration",
+        description: "Provide care, monitor progress, and adjust conditions for optimal growth.",
+      },
+      {
+        id: "harvest",
+        visualLabel: "Harvest",
+        technicalLabel: "Release & Delivery",
+        description: "Gather the mature results and deliver value to users.",
+      }
+    ],
+    visualElements: [
+      {
+        name: "Soil",
+        technicalLabel: "Infrastructure Layer",
+        explanation: "The foundational platform that supports all growth.",
+      },
+      {
+        name: "Seeds",
+        technicalLabel: "Core Features",
+        explanation: "The essential capabilities that will mature into full functionality.",
+      },
+      {
+        name: "Water & Nutrients",
+        technicalLabel: "Data & Resources",
+        explanation: "The inputs that fuel system operations and user value.",
+      },
+      {
+        name: "Climate Control",
+        technicalLabel: "Configuration & Environment",
+        explanation: "Settings and conditions that optimize system performance.",
+      }
+    ],
+    qualitySignals: ["Healthy growth rate", "Resilience to stress", "Harvest readiness"],
   }
 ];
 
