@@ -7,10 +7,16 @@ import { StoryMap } from "@/components/story-map";
 import { TechnicalMirror } from "@/components/technical-mirror";
 import { TemplateCard } from "@/components/template-card";
 import { OutputPanel } from "@/components/output-panel";
+import { OnboardingModal } from "@/components/onboarding-modal";
+import { HelpTooltip } from "@/components/help-tooltip";
+import { StageGuidancePanel } from "@/components/stage-guidance-panel";
 import { buildStageTimeline, calculateProgress, getProgressSummary } from "@/lib/project-helpers";
 import { analogyTemplates, defaultProjectDraft, getTemplateByKey } from "@/lib/templates";
 import { clearProjectDraft, loadProjectDraft, saveProjectDraft } from "@/lib/storage";
+import { getHelpContent } from "@/lib/help-content";
 import type { AnalogyKey, ProjectDraft } from "@/types/project";
+
+const ONBOARDING_STORAGE_KEY = "visual-builder.onboarding-completed";
 
 const fieldClassName = "mt-2 w-full rounded-2xl border border-slate-800 bg-slate-950/80 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-400";
 const labelClassName = "text-sm font-medium text-slate-200";
@@ -18,6 +24,7 @@ const labelClassName = "text-sm font-medium text-slate-200";
 export function ProjectBuilderDashboard() {
   const [draft, setDraft] = useState<ProjectDraft>(defaultProjectDraft);
   const [statusMessage, setStatusMessage] = useState("No local draft loaded yet.");
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   useEffect(() => {
     const savedDraft = loadProjectDraft();
@@ -25,7 +32,22 @@ export function ProjectBuilderDashboard() {
       setDraft(savedDraft);
       setStatusMessage("Loaded saved local draft from this browser.");
     }
+
+    // Check if onboarding has been completed
+    if (typeof window !== "undefined") {
+      const onboardingCompleted = window.localStorage.getItem(ONBOARDING_STORAGE_KEY);
+      if (!onboardingCompleted) {
+        setShowOnboarding(true);
+      }
+    }
   }, []);
+
+  function handleOnboardingComplete() {
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(ONBOARDING_STORAGE_KEY, "true");
+    }
+    setShowOnboarding(false);
+  }
 
   const selectedTemplate = useMemo(() => getTemplateByKey(draft.analogyKey), [draft.analogyKey]);
   const progress = useMemo(() => calculateProgress(draft.currentStage, selectedTemplate.stages.length), [draft.currentStage, selectedTemplate.stages.length]);
@@ -81,27 +103,39 @@ export function ProjectBuilderDashboard() {
             </div>
             <form className="space-y-5" onSubmit={handleSave}>
               <div>
-                <label className={labelClassName} htmlFor="projectName">Project name</label>
+                <label className={labelClassName} htmlFor="projectName">
+                  Project name <HelpTooltip content={getHelpContent("projectName")} />
+                </label>
                 <input id="projectName" value={draft.projectName} onChange={(event) => updateField("projectName", event.target.value)} className={fieldClassName} placeholder="Visual Builder" />
               </div>
               <div>
-                <label className={labelClassName} htmlFor="objective">Objective</label>
+                <label className={labelClassName} htmlFor="objective">
+                  Objective <HelpTooltip content={getHelpContent("objective")} />
+                </label>
                 <textarea id="objective" value={draft.objective} onChange={(event) => updateField("objective", event.target.value)} className={`${fieldClassName} min-h-28 resize-y`} placeholder="Explain the software idea clearly." />
               </div>
               <div>
-                <label className={labelClassName} htmlFor="targetUsers">Target users</label>
+                <label className={labelClassName} htmlFor="targetUsers">
+                  Target users <HelpTooltip content={getHelpContent("targetUsers")} />
+                </label>
                 <input id="targetUsers" value={draft.targetUsers} onChange={(event) => updateField("targetUsers", event.target.value)} className={fieldClassName} placeholder="Founders and AI-assisted builders" />
               </div>
               <div>
-                <label className={labelClassName} htmlFor="desiredEnvironment">Desired environment</label>
+                <label className={labelClassName} htmlFor="desiredEnvironment">
+                  Desired environment <HelpTooltip content={getHelpContent("desiredEnvironment")} />
+                </label>
                 <input id="desiredEnvironment" value={draft.desiredEnvironment} onChange={(event) => updateField("desiredEnvironment", event.target.value)} className={fieldClassName} placeholder="VS Code + Codex + browser" />
               </div>
               <div>
-                <label className={labelClassName} htmlFor="technicalFocus">Technical focus</label>
+                <label className={labelClassName} htmlFor="technicalFocus">
+                  Technical focus <HelpTooltip content={getHelpContent("technicalFocus")} />
+                </label>
                 <input id="technicalFocus" value={draft.technicalFocus} onChange={(event) => updateField("technicalFocus", event.target.value)} className={fieldClassName} placeholder="Intake, mapping, quality gates" />
               </div>
               <div>
-                <label className={labelClassName} htmlFor="currentStage">Current stage</label>
+                <label className={labelClassName} htmlFor="currentStage">
+                  Current stage <HelpTooltip content={getHelpContent("currentStage")} />
+                </label>
                 <select id="currentStage" value={draft.currentStage} onChange={(event) => updateField("currentStage", Number(event.target.value))} className={fieldClassName}>
                   {selectedTemplate.stages.map((stage, index) => (
                     <option key={stage.id} value={index}>{index + 1}. {stage.technicalLabel}</option>
@@ -109,7 +143,9 @@ export function ProjectBuilderDashboard() {
                 </select>
               </div>
               <div>
-                <label className={labelClassName} htmlFor="notes">Notes</label>
+                <label className={labelClassName} htmlFor="notes">
+                  Notes <HelpTooltip content={getHelpContent("notes")} />
+                </label>
                 <textarea id="notes" value={draft.notes} onChange={(event) => updateField("notes", event.target.value)} className={`${fieldClassName} min-h-24 resize-y`} placeholder="Add assumptions or open questions." />
               </div>
               <div className="flex flex-wrap gap-3 pt-2">
@@ -134,6 +170,7 @@ export function ProjectBuilderDashboard() {
         </aside>
 
         <div className="space-y-6">
+          <StageGuidancePanel template={selectedTemplate} currentStageIndex={draft.currentStage} />
           <ProgressOverview
             projectName={draft.projectName}
             objective={draft.objective}
@@ -151,6 +188,8 @@ export function ProjectBuilderDashboard() {
           <OutputPanel draft={draft} template={selectedTemplate} />
         </div>
       </section>
+
+      {showOnboarding && <OnboardingModal onComplete={handleOnboardingComplete} />}
     </main>
   );
 }
