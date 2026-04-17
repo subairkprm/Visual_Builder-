@@ -57,18 +57,6 @@ export function ProjectBuilderDashboard() {
     setStatusMessage(`Draft saved locally for \"${draft.projectName}\".`);
   }
 
-  function handleTemplateChange(newKey: AnalogyKey) {
-    setDraft((currentDraft) => {
-      const newTemplate = getTemplateByKey(newKey);
-      const maxStage = Math.max(newTemplate.stages.length - 1, 0);
-      return {
-        ...currentDraft,
-        analogyKey: newKey,
-        currentStage: Math.min(currentDraft.currentStage, maxStage),
-      };
-    });
-  }
-
   function handleReset() {
     clearProjectDraft();
     setDraft(defaultProjectDraft);
