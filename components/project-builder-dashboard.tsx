@@ -6,6 +6,7 @@ import { ProgressOverview } from "@/components/progress-overview";
 import { StoryMap } from "@/components/story-map";
 import { TechnicalMirror } from "@/components/technical-mirror";
 import { TemplateCard } from "@/components/template-card";
+import { OutputPanel } from "@/components/output-panel";
 import { buildStageTimeline, calculateProgress, getProgressSummary } from "@/lib/project-helpers";
 import { analogyTemplates, defaultProjectDraft, getTemplateByKey } from "@/lib/templates";
 import { clearProjectDraft, loadProjectDraft, saveProjectDraft } from "@/lib/storage";
@@ -147,6 +148,7 @@ export function ProjectBuilderDashboard() {
           />
           <StoryMap story={selectedTemplate.story} stages={stageTimeline} progress={progress} />
           <TechnicalMirror elements={selectedTemplate.visualElements} />
+          <OutputPanel draft={draft} template={selectedTemplate} />
         </div>
       </section>
     </main>
